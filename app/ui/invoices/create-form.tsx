@@ -13,10 +13,11 @@ import { createInvoice } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 
 // add form validation
-export default function Form({ customers }: { customers: CustomerField[] }) {
-  const initialState = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(createInvoice, initialState);
-  // return <form action={dispatch}>...</form>;
+export default function Form({
+  customers,
+}: {
+  customers: customerField[];
+}) {
   return (
     <form action={createInvoice}>
 
