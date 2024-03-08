@@ -16,7 +16,7 @@ import { useFormState } from 'react-dom';
 export default function Form({
   customers,
 }: {
-  customers: customerField[];
+  customers: CustomerField[];
 }) {
   return (
     <form action={createInvoice}>
