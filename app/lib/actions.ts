@@ -77,3 +77,49 @@ const UpdateInvoice = FormSchema.omit({ id: true, date: true });
         return { message: 'Database Error: Failed to Delete Invoice.' };
       }
     }
+
+// edit customers
+const UpdateCustomer = FormSchema.omit({ id: true, date: true });
+
+    export async function updateCustomer(id: string, formData: FormData) {
+      const { customerId, amount, status } = UpdateCustomer.parse({
+        customerId: formData.get('customerId'),
+        amount: formData.get('amount'),
+        status: formData.get('status'),
+      });
+     
+      const amountInCents = amount * 100;
+ 
+      try {
+        await sql`
+            UPDATE customers
+            SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+            WHERE id = ${id}
+          `;
+      } catch (error) {
+        return { message: 'Database Error: Failed to Update Customer.' };
+      }
+     
+      revalidatePath('/dashboard/customers');
+      redirect('/dashboard/customers');
+    }
+
+const CreateCustomer = FormSchema.omit({ id: true, date: true });
+
+export async function createCustomer(formData: FormData) {
+  const { customerId, amount, status } = CreateCustomer.parse({
+    customerId: formData.get('customerId'),
+    amount: formData.get('amount'),
+    status: formData.get('status'),
+  });
+};
+
+export async function deleteCustomer(id: string) {
+  try {
+    await sql`DELETE FROM customers WHERE id = ${id}`;
+    revalidatePath('/dashboard/customers');
+    return { message: 'Deleted Customer.' };
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Customer.' };
+  }
+}
