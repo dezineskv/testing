@@ -37,14 +37,14 @@ export default async function CustomersTable({
                     </div>
                     <p className="text-sm text-gray-500">{customer.email}</p>
                   </div>
-                  {/* <InvoiceStatus status={invoice.status} /> */}
+                  {(customer.total_invoices)}
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
-                    {(customer.total_paid)}
+                    {(customer.total_pending)}
                     </p>
-                    <p>{(customer.total_invoices)}</p> 
+                    <p>{(customer.total_paid)}</p> 
                   </div>
                   <div className="flex justify-end gap-2">
                     <UpdateCustomer id={customer.id} />
